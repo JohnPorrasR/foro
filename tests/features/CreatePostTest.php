@@ -13,9 +13,9 @@ class CreatePostTest extends FeatureTestCase
 
         // cuando esta conectado
         $this->visit(route('posts.create'))
-             ->type($title, 'title')
-             ->type($content, 'content')
-             ->press('Publicar');
+            ->type($title, 'title')
+            ->type($content, 'content')
+            ->press('Publicar');
 
         // entonces
         $this->seeInDatabase('posts', [
@@ -29,4 +29,46 @@ class CreatePostTest extends FeatureTestCase
 
     }
 
+    public function test_creating_a_post_requires_authentication()
+    {
+        $this->visit(route('posts.create'))
+            ->seePageIs(route('login'));
+    }
+
+    function test_create_post_form_validation()
+    {
+        $this->actingAs($this->defaultUser())
+            ->visit(route('posts.create'))
+            ->press('Publicar')
+            ->seePageIs(route('posts.create'))
+            ->seeErrors([
+                'title' => 'El campo título es obligatorio',
+                'content' => 'El campo contenido es obligatorio'
+            ]);
+
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
