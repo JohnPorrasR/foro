@@ -9,7 +9,7 @@ class CreatePostTest extends FeatureTestCase
         $title = 'Esta es una pregunta';
         $content = 'Esta es el contenido';
 
-        $this->actingAs($this->defaultUser());
+        $this->actingAs($user = $this->defaultUser());
 
         // cuando esta conectado
         $this->visit(route('posts.create'))
@@ -21,7 +21,8 @@ class CreatePostTest extends FeatureTestCase
         $this->seeInDatabase('posts', [
             'title' => $title,
             'content' => $content,
-            'pending' => true
+            'pending' => true,
+            'user_id' => $user->id,
         ]);
 
         // user es redirigido cuando se rea el post
