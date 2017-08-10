@@ -29,7 +29,6 @@ class Comment extends Model
 
     public function markAnAnswer()
     {
-
         $this->post->pending = false;
         $this->post->answer_id = $this->id;
 
@@ -40,5 +39,7 @@ class Comment extends Model
     {
         return $this->id === $this->post->answer_id;
     }
+
+
 
 }
