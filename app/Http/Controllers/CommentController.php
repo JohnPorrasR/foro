@@ -11,15 +11,9 @@ class CommentController extends Controller
 
     public function store(Request $request, Post $post)
     {
-        $comment = new Comment([
-            'comment' => $request->get('comment'),
-            'post_id' => $post->id,
-        ]);
-
-        auth()->user()->comnents()->save($comment);
+        auth()->user()->comnent($post, $request->get('comment'));
 
         return redirect($post->url);
-
     }
 
 }
